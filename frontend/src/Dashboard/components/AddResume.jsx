@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Ghost, PlusSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {v4 as uuidv4} from "uuid"
+import { useAuth } from '@clerk/clerk-react'
 import {
   Dialog,
   DialogContent,
@@ -11,37 +12,97 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { useUser } from '@clerk/clerk-react'
 
 function AddResume() {
-
+    const {getToken} = useAuth()
+    const {user, isSignedIn} = useUser()
     const [openDialog, setOpenDialog] = useState(false);
-    const [resumeTitle, setResumeTitle] = useState();
-    const onCreate = () => {
-        const uuid = uuidv4();
+    const [resumeTitle, setResumeTitle] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
+    const onCreate = async () => {
+        setError('')
+        setSuccess('')
+
+        if(!resumeTitle.trim()){
+            setError("Please enter a resume title.")
+            return 
+        }
+
+        if(!isSignedIn || !user){
+            setError('You must be signed in to create a resume.')
+            return
+        }
+
+        const resumeId = uuidv4()
+
+        const payload = {
+            title: resumeTitle,
+            resumeId,
+            userEmail: user?.primaryEmailAddress.emailAddress,
+            username: user?.fullName
+        }
+
+        try{
+            setLoading(true)
+            console.log("Submitting....")
+            const response = await fetch('/resumes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(payload),
+            })
+            console.log("done")
+
+            if(!response.ok){
+                const resp = await response.json()
+                throw new Error(resp.message || 'Failed to create resume Info')
+            }
+
+            const data = await response.json()
+            setSuccess(`Resume ${data.title} created successfully!`)
+            setResumeTitle('')
+            setOpenDialog(false)
+        }
+        catch (err){
+            setError(err.message)
+        }
+        finally{
+            setLoading(false)
+        }
 
     }
   return (
     <div className='p-14 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dotted' onClick={() => {setOpenDialog(true)}}>
         <PlusSquare/>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="bg-white">
+        <DialogContent className="bg-white" onClick={(e)=>e.stopPropagation()}>
             <DialogHeader>
             <DialogTitle>Create New Resume</DialogTitle>
             <DialogDescription>
                 Add a title for your new Resume
-                <Input className="my-2" placeholder="Ex.Full Stack Resume" onChange={(e) => setResumeTitle(e.target.value)}/>
+                <Input className="my-2" placeholder="Ex.Full Stack Resume" value={resumeTitle} onChange={(e) => setResumeTitle(e.target.value)}/>
             </DialogDescription>
             <div className='flex justify-end gap-5'>
                     
                 <Button variant="ghost" onClick={(e) => {
                     e.stopPropagation();
                     setOpenDialog(false)
+                    setError('')
+                    setSuccess('')
+                    setResumeTitle('')
                 }}>Cancel</Button>
                 <Button 
-                    disabled = {!resumeTitle}
-                className="bg-[#9f5bff] text-white" onClick={() => onCreate()}>Create</Button>
+                    disabled = {!resumeTitle || loading}
+                className="bg-[#9f5bff] text-white" onClick={() => onCreate()}>{loading? 'Creating...' : 'Create'}</Button>
             </div>
             </DialogHeader>
+            {error && <p style={{color: 'red', marginTop: '8px'}}> {error} </p>}
+            {success && <p style={{color: 'green', marginTop: '8px'}}> {error} </p>}
         </DialogContent>
         </Dialog>
   
