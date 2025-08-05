@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { useUser } from '@clerk/clerk-react'
+import { useNavigate } from 'react-router-dom'
 
 function AddResume() {
     const {getToken} = useAuth()
@@ -22,6 +23,7 @@ function AddResume() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+    const navigate = useNavigate()
     const onCreate = async () => {
         setError('')
         setSuccess('')
@@ -56,7 +58,7 @@ function AddResume() {
                 },
                 body: JSON.stringify(payload),
             })
-            console.log("done")
+            console.log(payload)
 
             if(!response.ok){
                 const resp = await response.json()
@@ -73,6 +75,7 @@ function AddResume() {
         }
         finally{
             setLoading(false)
+            navigate(`/dashboard/resume/` + resumeId + `/edit`)
         }
 
     }

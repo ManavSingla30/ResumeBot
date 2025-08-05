@@ -22,4 +22,23 @@ async function handleuserResumeinfo(req, res) {
   }
 }
 
-export { handleuserResumeinfo };
+
+async function getuserResumeInfo(req, res) {
+    try {
+      const {userEmail} = req.query
+      if(!userEmail){
+        return res.status(400).json({message: "userEmail is required"})
+      }
+  
+      const getResume = await userResume.find({userEmail});
+  
+      return res.status(200).json({
+        message: "All Resumes fetched successfully",
+        data: getResume
+      })
+    } catch (error) {
+      res.status(500).json({message: "Internal Server Error"})
+    }
+}
+
+export { handleuserResumeinfo, getuserResumeInfo };
