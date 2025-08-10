@@ -41,4 +41,28 @@ async function getuserResumeInfo(req, res) {
     }
 }
 
-export { handleuserResumeinfo, getuserResumeInfo };
+async function updateResumeDetail(req, res){
+  try{
+    const resumeId = req.params
+    const updates = req.body
+    const updatedResume = await userResume.findOneAndUpdate(
+      {resumeId},
+      updates,
+      {new: true}
+    )
+
+    if(!updatedResume){
+      return res.status(404).json({message: "Resume not found"})
+    }
+
+    return res.status(201).json({
+      message: "Resume Created",
+      data: updatedResume
+    })
+  }
+  catch(err){
+    res.status(500).json({message: "Internal Server Error"})
+  }
+}
+
+export { handleuserResumeinfo, getuserResumeInfo, updateResumeDetail };
