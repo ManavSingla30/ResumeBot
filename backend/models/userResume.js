@@ -40,6 +40,10 @@ const userResumeSchema = new mongoose.Schema({
     email: {
         required: true,
         type: String
+    },
+    summary: {
+        type: String,
+        required: true
     }
 })
 

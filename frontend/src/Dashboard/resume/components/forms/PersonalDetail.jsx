@@ -7,7 +7,7 @@ import { LoaderCircle } from 'lucide-react'
 import {toast} from "sonner"
 
 function PersonalDetail({enabledNext}) {
-    const {resumeInfo, setResumeInfo} = useContext(ResumeInfoContext)
+    const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
     const params = useParams()
     const [formData, setFormData] = useState(resumeInfo || {})
 

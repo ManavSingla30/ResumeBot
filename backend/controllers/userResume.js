@@ -64,5 +64,6 @@ async function updateResumeDetail(req, res){
     res.status(500).json({message: "Internal Server Error"})
   }
 }
+//Summary
 
-export { handleuserResumeinfo, getuserResumeInfo, updateResumeDetail };
+export { handleuserResumeinfo, getuserResumeInfo, updateResumeDetail};
