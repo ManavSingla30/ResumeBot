@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Ghost, PlusSquare } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {v4 as uuidv4} from "uuid"
 import { useAuth } from '@clerk/clerk-react'
@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { useUser } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 
-function AddResume() {
+function AddResume({ onCreateSuccess }) {
     const {getToken} = useAuth()
     const {user, isSignedIn} = useUser()
     const [openDialog, setOpenDialog] = useState(false);
@@ -69,6 +69,9 @@ function AddResume() {
             setSuccess(`Resume ${data.title} created successfully!`)
             setResumeTitle('')
             setOpenDialog(false)
+            if(typeof onCreateSuccess === 'function'){
+                onCreateSuccess()
+            }
         }
         catch (err){
             setError(err.message)
@@ -80,8 +83,11 @@ function AddResume() {
 
     }
   return (
-    <div className='p-14 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dotted' onClick={() => {setOpenDialog(true)}}>
-        <PlusSquare/>
+    <div className='group relative p-6 bg-white/80 backdrop-blur-sm rounded-2xl h-[280px] border-2 border-dashed border-purple-300 flex flex-col items-center justify-center shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all cursor-pointer' onClick={() => {setOpenDialog(true)}}>
+        <div className='flex items-center justify-center w-14 h-14 rounded-full bg-purple-50 text-purple-600 ring-1 ring-purple-200'>
+            <Plus className='w-7 h-7'/>
+        </div>
+        <p className='mt-3 text-gray-600 font-medium'>Add New Resume</p>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="bg-white" onClick={(e)=>e.stopPropagation()}>
             <DialogHeader>
@@ -105,7 +111,7 @@ function AddResume() {
             </div>
             </DialogHeader>
             {error && <p style={{color: 'red', marginTop: '8px'}}> {error} </p>}
-            {success && <p style={{color: 'green', marginTop: '8px'}}> {error} </p>}
+            {success && <p style={{color: 'green', marginTop: '8px'}}> {success} </p>}
         </DialogContent>
         </Dialog>
   
