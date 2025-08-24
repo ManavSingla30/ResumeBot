@@ -7,6 +7,9 @@ function Dashboard() {
   const {user} = useUser()
   const userEmail = user?.primaryEmailAddress?.emailAddress
   const [resumeList, setResumeList] = useState([])
+  const handleDeleted = (deletedResumeId) => {
+    setResumeList((list) => list.filter((r) => r.resumeId !== deletedResumeId))
+  }
   useEffect(() => {
     async function getResumeList(){
       if(!userEmail) return
@@ -44,7 +47,7 @@ function Dashboard() {
         )}
       </div> */}
       {resumeList.length > 0 && resumeList.map((resume) => (
-      <ResumeCardItem key={resume._id} resume={resume} />
+      <ResumeCardItem key={resume._id} resume={resume} onDeleted={handleDeleted} />
       ))}
 
     </div>
