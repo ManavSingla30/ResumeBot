@@ -13,9 +13,15 @@ function EditResume() {
     }, [])
     return (
         <ResumeInfoContext.Provider value={[ resumeInfo, setResumeInfo ]}>
-            <div className='grid grid-cols-1 md:grid-cols-2 p-10 gap-10'>
-                <FormSection/>
-                <ResumePreview/>
+            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-start'>
+                    <FormSection/>
+                    <div className='md:sticky md:top-24'>
+                        <div className='bg-white rounded-2xl border shadow-sm p-6'>
+                            <ResumePreview/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </ResumeInfoContext.Provider>
     )

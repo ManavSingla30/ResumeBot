@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 function ResumeCardItem({resume}) {
   return (
     <Link to={`/dashboard/resume/` + resume.resumeId + `/edit`}>
-      <div className='p-14 bg-secondary flex items-center justify-center h-[280px] border border-primary rounded-lg hover:scale-105 transition-all hover:shadow-md shadow-primary'>
-      <Notebook/>
-    </div>
-
-    <h2 className='text-center my-1'>{resume.title}</h2>
+      <div className='group relative flex flex-col items-center justify-center h-[240px] rounded-2xl border bg-white hover:shadow-md transition-all p-6'>
+        <div className='grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-indigo-100 to-sky-100 text-indigo-600'>
+          <Notebook/>
+        </div>
+        <h2 className='mt-3 text-sm font-medium text-center'>{resume.title}</h2>
+      </div>
     </Link>
   )
 }

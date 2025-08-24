@@ -8,21 +8,26 @@ function Header() {
     const {user, isSignedIn} = useUser()
   return (
     <>
-        <div className='py-3 px-4 flex justify-between shadow-md'>
-            <img src="/logo.svg" alt="AI Resume Builder" />
+        <div className='sticky top-0 z-50 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b'>
+            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                    <img src="/logo.svg" alt="AI Resume Builder" className='h-7 w-auto' />
+                    <span className='hidden sm:block font-semibold tracking-tight'>AI Resume Builder</span>
+                </div>
 
-            {
-                isSignedIn ? 
-                <div className='flex gap-2 items-center'>
-                    <Link to={"/dashboard"}>
-                        <Button className="bg-[#9f5bff] text-white cursor-pointer">Dashboard</Button>
+                {
+                    isSignedIn ? 
+                    <div className='flex gap-3 items-center'>
+                        <Link to={"/dashboard"}>
+                            <Button className="bg-[#9f5bff] hover:bg-[#8d45ff] text-white cursor-pointer rounded-full px-5">Dashboard</Button>
+                        </Link>
+                        <UserButton/>
+                    </div> :
+                    <Link to={"/auth/sign-in"}>
+                        <Button className="bg-[#9f5bff] hover:bg-[#8d45ff] text-white cursor-pointer rounded-full px-5">Get Started</Button>
                     </Link>
-                    <UserButton/>
-                </div> :
-                <Link to={"/auth/sign-in"}>
-                <Button className="bg-[#9f5bff] text-white cursor-pointer">Get Started</Button>
-                </Link>
-            }
+                }
+            </div>
         </div>
     </>
   )

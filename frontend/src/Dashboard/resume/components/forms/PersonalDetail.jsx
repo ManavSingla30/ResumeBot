@@ -44,12 +44,12 @@ function PersonalDetail({enabledNext}) {
         toast("Details Updated")
     }
   return (
-    <div className='p-5 shadow-lg rounded-lg border-t-primary border-t-4'>
-        <h2 className='font-bold text-lg'>Personal Detail</h2>
-        <p>Get Started with basic information</p>
+    <div className='p-5 rounded-xl border'>
+        <h2 className='font-bold text-lg tracking-tight'>Personal Details</h2>
+        <p className='text-sm text-muted-foreground'>Tell us about yourself.</p>
 
         <form onSubmit={onSave}>
-            <div className='grid grid-cols-2 mt-5 gap-3'>
+            <div className='grid grid-cols-2 mt-5 gap-4'>
                 <div>
                     <label className='text-sm'>First Name</label>
                     <Input name='firstname' defaultValue={resumeInfo?.firstname} required onChange={handleInputChange}/>
@@ -75,8 +75,10 @@ function PersonalDetail({enabledNext}) {
                     <Input name='email' defaultValue={resumeInfo?.email} required onChange={handleInputChange}/>
                 </div>
             </div>
-            <div className='mt-3 flex justify-end'>
-                <Button type='submit' disabled={loading}>{loading ? <LoaderCircle className='animate-spins'/> : 'Save'}</Button>
+            <div className='mt-4 flex justify-end'>
+                <Button type='submit' disabled={loading} className='rounded-full px-5'>
+                    {loading ? <LoaderCircle className='animate-spin'/> : 'Save'}
+                </Button>
             </div>
         </form>
     </div>
