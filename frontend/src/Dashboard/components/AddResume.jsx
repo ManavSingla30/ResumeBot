@@ -80,8 +80,14 @@ function AddResume() {
 
     }
   return (
-    <div className='p-14 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dotted' onClick={() => {setOpenDialog(true)}}>
-        <PlusSquare/>
+    <div className='group relative flex flex-col items-center justify-center h-[240px] rounded-2xl border border-dashed border-primary/40 bg-white hover:border-primary/60 hover:shadow-md transition-all cursor-pointer p-6 text-center' onClick={() => {setOpenDialog(true)}}>
+        <div className='grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-violet-100 to-fuchsia-100 text-[#7C3AED] mb-3'>
+          <PlusSquare/>
+        </div>
+        <div>
+          <div className='text-sm font-medium'>Add New Resume</div>
+          <p className='text-xs text-muted-foreground mt-1'>Start from a blank slate with AI.</p>
+        </div>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="bg-white" onClick={(e)=>e.stopPropagation()}>
             <DialogHeader>
@@ -101,7 +107,7 @@ function AddResume() {
                 }}>Cancel</Button>
                 <Button 
                     disabled = {!resumeTitle || loading}
-                className="bg-[#9f5bff] text-white" onClick={() => onCreate()}>{loading? 'Creating...' : 'Create'}</Button>
+                className="bg-[#9f5bff] hover:bg-[#8d45ff] text-white" onClick={() => onCreate()}>{loading? 'Creating...' : 'Create'}</Button>
             </div>
             </DialogHeader>
             {error && <p style={{color: 'red', marginTop: '8px'}}> {error} </p>}

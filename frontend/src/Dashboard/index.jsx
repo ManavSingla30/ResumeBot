@@ -22,10 +22,15 @@ function Dashboard() {
     getResumeList()
   }, [userEmail])
   return ( 
-    <div className='p-10 md:px-20 lg:px-32'>
-      <h2 className='font-bold text-3xl'>My Resume</h2>
-      <p>Start Creating AI resume to your next Job Role</p>
-      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mt-10 gap-5'><AddResume/></div>
+    <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10'>
+      <h2 className='font-bold text-3xl md:text-4xl tracking-tight'>My Resume</h2>
+      <p className='text-muted-foreground mt-1'>Start creating an AI resume for your next role.</p>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-8'>
+        <AddResume/>
+        {resumeList.length > 0 && resumeList.map((resume) => (
+          <ResumeCardItem key={resume._id} resume={resume} />
+        ))}
+      </div>
       {/* <div className='mt-10'>
         <h3 className='font-bold text-x1 mb-4'>Your Resumes:</h3>
         {resumeList.length === 0 ? (
@@ -43,10 +48,6 @@ function Dashboard() {
           </ul>
         )}
       </div> */}
-      {resumeList.length > 0 && resumeList.map((resume) => (
-      <ResumeCardItem key={resume._id} resume={resume} />
-      ))}
-
     </div>
   )
 }

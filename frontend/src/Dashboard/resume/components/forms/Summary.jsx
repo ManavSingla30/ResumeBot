@@ -70,18 +70,20 @@ function Summary() {
 
   return (
     <div>
-        <div className='p-5 shadow-lg rounded-lg border-t-primary border-t-4'>
-            <h2 className='font-bold text-lg'>Summary</h2>
-            <p>Add Summary for your Job Title</p>
+        <div className='p-5 rounded-xl border'>
+            <h2 className='font-bold text-lg tracking-tight'>Summary</h2>
+            <p className='text-sm text-muted-foreground'>Add a short professional blurb.</p>
 
             <form className='mt-7' onSubmit={onSave}>
                 <div className='flex justify-between items-end'>
                     <label>Add Summary</label>
-                    <Button size='sm' type = 'button' className='border-primary text-primary gap-2 flex' onClick = {handleGenerate}><Brain className='h-4 w-4'/>Generate with AI</Button>
+                    <Button size='sm' type = 'button' className='gap-2 flex rounded-full' onClick = {handleGenerate}><Brain className='h-4 w-4'/>Generate with AI</Button>
                 </div>
                 <Textarea className="mt-5" required value = {summary || ''} onChange={(e) => setSummary(e.target.value)}/>
-                <div className='mt-2 flex justify-end'>
-                    <Button type='submit' disabled={loading}>{loading ? <LoaderCircle className='animate-spins'/> : 'Save'}</Button>
+                <div className='mt-3 flex justify-end'>
+                    <Button type='submit' disabled={loading} className='rounded-full px-5'>
+                        {loading ? <LoaderCircle className='animate-spin'/> : 'Save'}
+                    </Button>
                 </div>
             </form>
         </div>
