@@ -43,10 +43,10 @@ async function getuserResumeInfo(req, res) {
 
 async function updateResumeDetail(req, res){
   try{
-    const resumeId = req.params
+    const { resumeId } = req.params
     const updates = req.body
     const updatedResume = await userResume.findOneAndUpdate(
-      {resumeId},
+      { resumeId },
       updates,
       {new: true}
     )
@@ -55,8 +55,8 @@ async function updateResumeDetail(req, res){
       return res.status(404).json({message: "Resume not found"})
     }
 
-    return res.status(201).json({
-      message: "Resume Created",
+    return res.status(200).json({
+      message: "Resume updated",
       data: updatedResume
     })
   }
@@ -64,6 +64,19 @@ async function updateResumeDetail(req, res){
     res.status(500).json({message: "Internal Server Error"})
   }
 }
+
+async function deleteResume(req, res){
+  try{
+    const { resumeId } = req.params
+    const deleted = await userResume.findOneAndDelete({ resumeId })
+    if(!deleted){
+      return res.status(404).json({ message: 'Resume not found' })
+    }
+    return res.status(200).json({ message: 'Resume deleted' })
+  }catch(err){
+    res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 //Summary
 
-export { handleuserResumeinfo, getuserResumeInfo, updateResumeDetail};
+export { handleuserResumeinfo, getuserResumeInfo, updateResumeDetail, deleteResume};

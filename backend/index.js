@@ -19,7 +19,7 @@ await connectionDB();
 
 import userResumeRoutes from "./routes/userResume.js";
 app.use("/resumes", userResumeRoutes)
-app.use('/api/gemini', geminiRouter);
+app.use("/api/gemini", geminiRouter);
 
 
 app.listen(PORT, () => console.log(`SERVER STARTED AT ${PORT}`))

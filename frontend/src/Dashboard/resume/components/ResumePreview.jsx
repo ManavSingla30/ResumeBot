@@ -8,6 +8,7 @@ import SkillPreview from './preview/SkillPreview'
 
 function ResumePreview() {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
+    console.log(resumeInfo)
   return (
     <div className='shadow-lg h-full p-14 border-t-[20px]' style={{borderColor: resumeInfo?.themeColor}}>
       <PersonalDetailPreview resumeInfo={resumeInfo}/>

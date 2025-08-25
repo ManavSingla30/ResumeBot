@@ -9,12 +9,12 @@ import {toast} from "sonner"
 function PersonalDetail({enabledNext}) {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
     const params = useParams()
-    const [formData, setFormData] = useState(resumeInfo || {})
+    const [formData, setFormData] = useState(resumeInfo)
 
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setFormData(resumeInfo || {})
+        setFormData(resumeInfo)
     }, [resumeInfo])
     const handleInputChange = (e) => {
         enabledNext(false)
@@ -33,14 +33,16 @@ function PersonalDetail({enabledNext}) {
     async function onSave (e) {
         e.preventDefault()
         setLoading(true)
+        console.log(params.resumeId)
         const resumeId = params?.resumeId
+        console.log(resumeId)
         await fetch(`/resumes/${resumeId}`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
         })
         enabledNext(true)
-        setLoading(true)
+        setLoading(false)
         toast("Details Updated")
     }
   return (

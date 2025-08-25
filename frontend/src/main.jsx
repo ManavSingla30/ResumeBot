@@ -6,8 +6,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './Home'
 import Dashboard from './Dashboard'
 import SignIn from './auth/Sign-In'
+import { ResumeInfoProvider } from './context/ResumeInfoContext.jsx';
 import { ClerkProvider } from '@clerk/clerk-react'
 import EditResume from './Dashboard/resume/[resumeId]/edit'
+import ViewResume from './my-resume/[resumeId]/view'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard/>
+      },
+      {
+        path:'/dashboard/resume/:resumeId/edit',
+        element: <EditResume/>
       }
     ]
   },
@@ -34,15 +40,17 @@ const router = createBrowserRouter([
     element: <SignIn/>
   },
   {
-    path:'/dashboard/resume/:resumeId/edit',
-    element: <EditResume/>
+    path: '/my-resume/:resumeId/view',
+    element: <ViewResume/>
   }
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router = {router}/>
+      <ResumeInfoProvider>
+        <RouterProvider router = {router}/>
+      </ResumeInfoProvider>
     </ClerkProvider>
   </StrictMode>,
 )

@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { LoaderCircle } from 'lucide-react'
 import { useState } from 'react'
 import { Brain } from 'lucide-react'
+const promptTemplate = "Write a concise 3-line professional résumé summary for a {jobTitle}. Highlight 3-5 relevant skills, include 2-3 quantifiable achievements, keep it under 70 words, ATS-friendly, and avoid clichés.";
 function Summary() {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
     const params = useParams()
@@ -25,10 +26,11 @@ function Summary() {
         e.preventDefault()
         setLoading(true)
         const resumeId = params?.resumeId
+        console.log(resumeId)
 
         try {
         const res = await fetch(`/resumes/${resumeId}`, {
-            method: 'PUT',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ summary }) 
         });
@@ -46,27 +48,34 @@ function Summary() {
     }
 
     async function handleGenerate() {
-        try {
-            const res = await fetch('http://localhost:8000/api/gemini/generate', {
+    if (!resumeInfo?.jobtitle) {
+        console.error("Job title is missing");
+        return;
+    }
+
+    const PROMPT = promptTemplate.replace('{jobTitle}', resumeInfo.jobtitle)
+
+    try {
+        const res = await fetch('http://localhost:8000/api/gemini/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: "Tell me about AI" }),
-            });
+            body: JSON.stringify({ prompt: PROMPT }), 
+        });
 
-            if (!res.ok) {
-            // Something went wrong, log the error message from the body
+        if (!res.ok) {
             const errorText = await res.text();
             console.error('Failed to generate:', errorText);
             return;
-            }
-
-            const data = await res.json();
-            console.log(data.result)
-            setResult(data.result);
-        } catch (error) {
-            console.error('Error calling openai backend:', error);
         }
+
+        const data = await res.json();
+        console.log(data.result)
+        setSummary(data.result)
+        
+    } catch (error) {
+        console.error('Error calling openai backend:', error);
     }
+}
 
   return (
     <div>
@@ -86,7 +95,7 @@ function Summary() {
             </form>
         </div>
         {result && <div>
-            <h2 className='font-bold text-lg'></h2>
+            <h2 className='font-bold text-lg'>Suggestions</h2>
             
         </div>}
     </div>
