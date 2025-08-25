@@ -83,13 +83,13 @@ function AddResume({ onCreateSuccess }) {
 
     }
   return (
-    <div className='group relative p-6 bg-white/80 backdrop-blur-sm rounded-2xl h-[280px] border-2 border-dashed border-purple-300 flex flex-col items-center justify-center shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all cursor-pointer' onClick={() => {setOpenDialog(true)}}>
-        <div className='flex items-center justify-center w-14 h-14 rounded-full bg-purple-50 text-purple-600 ring-1 ring-purple-200'>
+    <div className='group relative h-[280px] rounded-2xl border border-dashed border-purple-300 bg-white/80 backdrop-blur-sm p-6 flex flex-col items-center justify-center shadow-sm ring-1 ring-purple-100 hover:shadow-lg hover:scale-[1.02] transition-all cursor-pointer' onClick={() => {setOpenDialog(true)}}>
+        <div className='flex items-center justify-center w-14 h-14 rounded-full bg-purple-50 text-purple-600 ring-1 ring-purple-200 group-hover:ring-purple-300 group-hover:bg-purple-100 transition-colors'>
             <Plus className='w-7 h-7'/>
         </div>
         <p className='mt-3 text-gray-600 font-medium'>Add New Resume</p>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="bg-white" onClick={(e)=>e.stopPropagation()}>
+        <DialogContent className="bg-white sm:max-w-md rounded-xl" onClick={(e)=>e.stopPropagation()}>
             <DialogHeader>
             <DialogTitle>Create New Resume</DialogTitle>
             <DialogDescription>
