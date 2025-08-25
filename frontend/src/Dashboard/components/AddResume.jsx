@@ -80,8 +80,14 @@ function AddResume() {
 
     }
   return (
-    <div className='p-14 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dotted' onClick={() => {setOpenDialog(true)}}>
-        <PlusSquare/>
+    <div className='group relative flex flex-col items-center justify-center h-[280px] rounded-xl border border-dashed bg-secondary/60 hover:bg-secondary transition-colors hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.01] cursor-pointer p-6' onClick={() => {setOpenDialog(true)}}>
+        <div className='flex h-14 w-14 items-center justify-center rounded-full bg-white text-primary shadow-sm ring-1 ring-primary/10 group-hover:ring-primary/30 transition-all'>
+          <PlusSquare className='h-6 w-6'/>
+        </div>
+        <div className='mt-3 text-center'>
+          <p className='font-medium'>Add New Resume</p>
+          <p className='text-xs text-muted-foreground'>Start from a clean slate</p>
+        </div>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="bg-white" onClick={(e)=>e.stopPropagation()}>
             <DialogHeader>
