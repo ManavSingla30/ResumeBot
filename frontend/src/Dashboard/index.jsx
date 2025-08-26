@@ -2,17 +2,15 @@ import React, { useEffect, useMemo, useState } from 'react'
 import AddResume from './components/AddResume'
 import { useUser } from '@clerk/clerk-react'
 import ResumeCardItem from './components/ResumeCardItem'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Search, ArrowUpDown, Grid2X2 } from 'lucide-react'
+import { Grid2X2 } from 'lucide-react'
 
 function Dashboard() {
   const {user} = useUser()
   const userEmail = user?.primaryEmailAddress?.emailAddress
   const [resumeList, setResumeList] = useState([])
   const [loading, setLoading] = useState(true)
-  const [query, setQuery] = useState('')
-  const [sortAsc, setSortAsc] = useState(true)
+  const [query] = useState('')
+  const [sortAsc] = useState(true)
 
   const handleDeleted = (deletedResumeId) => {
     setResumeList((list) => list.filter((r) => r.resumeId !== deletedResumeId))
@@ -49,38 +47,34 @@ function Dashboard() {
   }, [resumeList, query, sortAsc])
 
   return ( 
-    <div className='px-6 py-8 md:px-12 lg:px-24'>
-      <div className='flex flex-col gap-1'>
-        <h2 className='text-2xl md:text-3xl font-bold tracking-tight'>My Resumes</h2>
-        <p className='text-neutral-600 dark:text-neutral-300'>Create, manage, and export resumes with AI assistance.</p>
-      </div>
-
-      <div className='mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-        <div className='flex w-full max-w-md items-center gap-2 rounded-lg border bg-white px-3 py-2 shadow-sm dark:border-neutral-800 dark:bg-neutral-900'>
-          <Search className='size-4 text-neutral-500'/>
-          <Input className='border-0 shadow-none focus-visible:ring-0' placeholder='Search resumes...' value={query} onChange={(e)=>setQuery(e.target.value)}/>
+    <div className='px-0 pb-10 md:px-0'>
+      {/* Colorful Hero */}
+      <div className='relative overflow-hidden'>
+        <div className='relative mx-auto max-w-7xl px-6 pt-10'>
+          <div className='rounded-3xl bg-gradient-to-r from-[#9f5bff] via-[#7a5cff] to-[#4f46e5] p-[1px] shadow-[0_10px_30px_rgba(0,0,0,0.1)]'>
+            <div className='rounded-3xl bg-white/90 p-8 dark:bg-neutral-900/90'>
+              <h2 className='text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-[#7a40ff] to-[#4f46e5] bg-clip-text text-transparent'>Your Resumes</h2>
+              <p className='mt-2 text-neutral-700 dark:text-neutral-300'>Create, customize, and export stunning resumes with AI.</p>
+              <div className='mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4'>
+                <AddResume/>
+                {loading && Array.from({length:3}).map((_,i)=> (
+                  <div key={i} className='group relative h-[280px] overflow-hidden rounded-2xl border border-white/40 bg-gradient-to-br from-purple-200 via-pink-200 to-yellow-200 p-6 opacity-60 animate-pulse'/>
+                ))}
+                {!loading && filtered.map((resume) => (
+                  <ResumeCardItem key={resume._id} resume={resume} onDeleted={handleDeleted} />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='flex items-center gap-2'>
-          <Button variant='outline' onClick={() => setSortAsc((v)=>!v)} className='flex items-center gap-2'>
-            <ArrowUpDown className='size-4'/> Sort {sortAsc ? 'A–Z' : 'Z–A'}
-          </Button>
-        </div>
-      </div>
-
-      <div className='mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5'>
-        <AddResume/>
-        {loading && Array.from({length:3}).map((_,i)=> (
-          <div key={i} className='group relative p-6 bg-white/80 backdrop-blur-sm rounded-2xl h-[280px] border border-neutral-200 animate-pulse'/>
-        ))}
-        {!loading && filtered.map((resume) => (
-          <ResumeCardItem key={resume._id} resume={resume} onDeleted={handleDeleted} />
-        ))}
       </div>
 
       {!loading && filtered.length === 0 && (
-        <div className='mt-12 rounded-xl border border-dashed p-10 text-center text-neutral-600 dark:border-neutral-800 dark:text-neutral-300'>
-          <Grid2X2 className='mx-auto mb-2 size-6 opacity-60'/>
-          No resumes found. Create your first one to get started.
+        <div className='mx-auto mt-12 max-w-7xl px-6'>
+          <div className='rounded-2xl border border-dashed p-10 text-center text-neutral-600 dark:border-neutral-800 dark:text-neutral-300'>
+            <Grid2X2 className='mx-auto mb-2 size-6 opacity-60'/>
+            No resumes yet. Create your first one to get started.
+          </div>
         </div>
       )}
     </div>
