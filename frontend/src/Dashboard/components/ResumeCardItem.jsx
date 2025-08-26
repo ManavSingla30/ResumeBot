@@ -31,14 +31,19 @@ function ResumeCardItem({resume, onDeleted}) {
     window.print()
   }
 
+  const color = resume?.themeColor || '#9f5bff'
+  const gradient = `linear-gradient(135deg, ${color}33, #ffffff00)`
+  const ringColor = `${color}66`
+
   return (
     <div className='relative'>
       <Link to={`/dashboard/resume/` + resume.resumeId + `/edit`}>
-        <div className='group relative h-[280px] overflow-hidden rounded-2xl border border-white/40 bg-white p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4)] transition-all hover:shadow-xl dark:border-neutral-800 dark:bg-neutral-900'
-             style={{ backgroundImage: 'linear-gradient(135deg, rgba(159,91,255,0.18), rgba(255,126,179,0.18))' }}>
+        <div className='group relative h-[280px] overflow-hidden rounded-2xl border bg-white p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4)] transition-all hover:shadow-xl dark:border-neutral-800 dark:bg-neutral-900'
+             style={{ backgroundImage: gradient, borderColor: ringColor }}>
           <div className='absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100' style={{ backgroundImage: 'radial-gradient(600px circle at 0% 0%, rgba(255,255,255,0.3), transparent 40%), radial-gradient(600px circle at 100% 100%, rgba(255,255,255,0.25), transparent 40%)' }}/>
           <div className='relative z-10 flex h-full flex-col items-center justify-center gap-3'>
-            <div className='flex size-12 items-center justify-center rounded-full bg-white/70 text-purple-700 ring-1 ring-white/60 backdrop-blur dark:bg-white/10 dark:text-purple-300'>
+            <div className='flex size-12 items-center justify-center rounded-full ring-1 backdrop-blur'
+                 style={{ backgroundColor: '#ffffffb3', color, borderColor: ringColor }}>
               <Notebook/>
             </div>
             <h3 className='text-base font-semibold text-center'>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddResume from './components/AddResume'
 import { useUser } from '@clerk/clerk-react'
 import ResumeCardItem from './components/ResumeCardItem'
@@ -9,8 +9,7 @@ function Dashboard() {
   const userEmail = user?.primaryEmailAddress?.emailAddress
   const [resumeList, setResumeList] = useState([])
   const [loading, setLoading] = useState(true)
-  const [query] = useState('')
-  const [sortAsc] = useState(true)
+  
 
   const handleDeleted = (deletedResumeId) => {
     setResumeList((list) => list.filter((r) => r.resumeId !== deletedResumeId))
@@ -33,18 +32,7 @@ function Dashboard() {
     getResumeList()
   }, [userEmail])
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    const items = q ? resumeList.filter((r) => (r.title || '').toLowerCase().includes(q)) : resumeList
-    const sorted = [...items].sort((a,b) => {
-      const at = (a.title || '').toLowerCase()
-      const bt = (b.title || '').toLowerCase()
-      if(at < bt) return sortAsc ? -1 : 1
-      if(at > bt) return sortAsc ? 1 : -1
-      return 0
-    })
-    return sorted
-  }, [resumeList, query, sortAsc])
+  
 
   return ( 
     <div className='px-0 pb-10 md:px-0'>
@@ -60,7 +48,7 @@ function Dashboard() {
                 {loading && Array.from({length:3}).map((_,i)=> (
                   <div key={i} className='group relative h-[280px] overflow-hidden rounded-2xl border border-white/40 bg-gradient-to-br from-purple-200 via-pink-200 to-yellow-200 p-6 opacity-60 animate-pulse'/>
                 ))}
-                {!loading && filtered.map((resume) => (
+                {!loading && resumeList.map((resume) => (
                   <ResumeCardItem key={resume._id} resume={resume} onDeleted={handleDeleted} />
                 ))}
               </div>
@@ -69,7 +57,7 @@ function Dashboard() {
         </div>
       </div>
 
-      {!loading && filtered.length === 0 && (
+      {!loading && resumeList.length === 0 && (
         <div className='mx-auto mt-12 max-w-7xl px-6'>
           <div className='rounded-2xl border border-dashed p-10 text-center text-neutral-600 dark:border-neutral-800 dark:text-neutral-300'>
             <Grid2X2 className='mx-auto mb-2 size-6 opacity-60'/>
