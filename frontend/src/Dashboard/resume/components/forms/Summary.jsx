@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import { useParams } from 'react-router-dom'
@@ -10,17 +10,16 @@ const promptTemplate = "Write a concise 3-line professional résumé summary for
 function Summary() {
     const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
     const params = useParams()
-    const [loading, setLoading] = useState()
+    const [loading, setLoading] = useState(false)
     const [summary, setSummary] = useState(resumeInfo?.summary || '')
-    const [prompt, setPrompt] = useState()
-    const [result, setResult] = useState()
+    // const [prompt, setPrompt] = useState()
+    // const [result, setResult] = useState()
     useEffect(() => {
-        console.log(resumeInfo)
         setResumeInfo((prev) => ({
             ...prev,
             summary
         }))
-    }, [summary])
+    }, [summary, setResumeInfo])
 
     async function onSave(e){
         e.preventDefault()
@@ -94,10 +93,7 @@ function Summary() {
                 </div>
             </form>
         </div>
-        {result && <div>
-            <h2 className='font-bold text-lg'>Suggestions</h2>
-            
-        </div>}
+        {/* Suggestions section intentionally removed */}
     </div>
   )
 }

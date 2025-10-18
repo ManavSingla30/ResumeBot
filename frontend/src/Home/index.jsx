@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '@/components/custom/Header'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { useUser } from '@clerk/clerk-react'
 import { Sparkles, Zap, Shield, FileText, CheckCircle2, ArrowRight } from 'lucide-react'
@@ -100,7 +100,9 @@ function Home() {
             <p className="mt-3 text-neutral-600 dark:text-neutral-300">Powerful tools without the complexity.</p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map(({ icon: Icon, title, desc }) => (
+            {features.map(({ icon, title, desc }) => {
+              const Icon = icon;
+              return (
               <div key={title} className="rounded-xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
                 <div className="flex size-10 items-center justify-center rounded-lg bg-purple-100 text-[#7a40ff] dark:bg-purple-500/20">
                   <Icon className="size-5"/>
@@ -108,7 +110,7 @@ function Home() {
                 <h3 className="mt-4 font-semibold">{title}</h3>
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{desc}</p>
               </div>
-            ))}
+            )})}
           </div>
         </section>
 

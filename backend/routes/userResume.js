@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requireAuth } from "@clerk/clerk-sdk-node";
+// import { requireAuth } from "@clerk/clerk-sdk-node";
 import { getuserResumeInfo, handleuserResumeinfo, updateResumeDetail, deleteResume } from "../controllers/userResume.js";
 const router = Router()
 

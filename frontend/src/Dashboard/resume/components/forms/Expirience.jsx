@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import RichTextEditor from '../RichTextEditor'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import { LoaderCircle } from 'lucide-react'
@@ -40,7 +40,7 @@ function Expirience() {
         ...prev,
         expirience: expirienceList
     }))
-    }, [expirienceList])
+    }, [expirienceList, setResumeInfo])
 
 
   const handleRichTextEditor = (val, name, index) => {
@@ -62,9 +62,7 @@ function Expirience() {
     const resumeId = params?.resumeId
 
     try {
-      const data = {
-        expirience: expirienceList.map(({ id, ...rest }) => rest),
-      }
+      const data = { expirience: expirienceList }
 
       const res = await fetch(`/resumes/${resumeId}`, {
         method: 'POST', // Or PUT/PATCH if your API expects that for updates

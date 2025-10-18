@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import {v4 as uuidv4} from "uuid"
 import { useAuth } from '@clerk/clerk-react'
 import {
@@ -16,7 +16,7 @@ import { useUser } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 
 function AddResume({ onCreateSuccess }) {
-    const {getToken} = useAuth()
+    useAuth()
     const {user, isSignedIn} = useUser()
     const [openDialog, setOpenDialog] = useState(false);
     const [resumeTitle, setResumeTitle] = useState('');

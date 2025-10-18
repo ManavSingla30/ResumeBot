@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button } from '../ui/button'
+import Button from '../ui/button'
 import { Link } from 'react-router-dom'
 import { useUser } from '@clerk/clerk-react'
 import { UserButton } from '@clerk/clerk-react'
 
 function Header() {
-    const {user, isSignedIn} = useUser()
+    const { isSignedIn } = useUser()
   return (
     <>
         <div className='py-3 px-4 flex justify-between shadow-md'>

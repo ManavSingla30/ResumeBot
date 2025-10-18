@@ -3,7 +3,7 @@ import resumeData from "./../dummy/dummy.jsx"
 
 export const ResumeInfoContext = createContext()
 
-export const ResumeInfoProvider = ({ children }) => {
+function ResumeInfoProvider({ children }){
   const [resumeInfo, setResumeInfo] = useState(resumeData); 
 
   return (
@@ -11,4 +11,6 @@ export const ResumeInfoProvider = ({ children }) => {
       {children}
     </ResumeInfoContext.Provider>
   );
-};
+}
+
+export { ResumeInfoProvider }

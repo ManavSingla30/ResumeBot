@@ -1,7 +1,7 @@
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import React, { useContext, useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { useParams } from 'react-router-dom'
 import { LoaderCircle } from 'lucide-react'
 import {toast} from "sonner"

@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { BtnBold, BtnBulletList, BtnClearFormatting, BtnItalic, BtnLink, BtnNumberedList, BtnRedo, BtnStrikeThrough, BtnStyles, BtnUnderline, BtnUndo, Editor, EditorProvider, HtmlButton, Separator, Toolbar } from 'react-simple-wysiwyg'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { Brain, LoaderCircle } from 'lucide-react'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import { toast } from 'sonner'
 const PROMPT = 'position title: {positionTitle}, Depends on position title give me 5-7 bullet points for my expirience in resume, give me result in HTML format'
 function RichTextEditor({onRichTextEditorChange, index, defaultValue}) {
     const [value, setValue] = useState(defaultValue || "")
-    const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
-    const [loading, setLoading] = useState()
-    const [prompt, setPrompt] = useState()
+    const [resumeInfo] = useContext(ResumeInfoContext)
+    const [loading, setLoading] = useState(false)
     const GenerateSummaryfromAI = async() => {
         if (!resumeInfo?.expirience[index]?.title) {
             toast('Please Add Position Title');

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import Header from '@/components/custom/Header'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import ResumePreview from '@/Dashboard/resume/components/ResumePreview'
 import { useParams } from 'react-router-dom'
 
 function ViewResume() {
-  const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext)
+  const [, setResumeInfo] = useContext(ResumeInfoContext)
   const { resumeId } = useParams()
 
   const getResumeInfo = async () => {
@@ -26,7 +26,7 @@ function ViewResume() {
 
   useEffect(() => {
     getResumeInfo()
-  }, [])
+  }, [resumeId])
 
   const handleDownload = () => {
     window.print()

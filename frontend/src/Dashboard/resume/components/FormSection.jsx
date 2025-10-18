@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import PersonalDetail from './forms/PersonalDetail'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { ArrowRight, LayoutGrid, ArrowLeft } from 'lucide-react'
 import Summary from "./forms/Summary"
 import Expirience from './forms/Expirience'

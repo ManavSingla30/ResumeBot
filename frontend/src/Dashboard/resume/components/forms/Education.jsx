@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { LoaderCircle } from 'lucide-react'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import { useParams } from 'react-router-dom'
@@ -19,7 +19,7 @@ function Education() {
   const [loading, setLoading] = useState(false);
   const [resumeInfo, setResumeInfo] = useContext(ResumeInfoContext);
   const params = useParams();
-  const prevEducationalList = useRef()
+  useRef()
   useEffect(() => {
     if (resumeInfo?.education) {
       setEducationalList(resumeInfo.education);
@@ -65,7 +65,7 @@ function Education() {
 const onSave = async () => {
   setLoading(true);
   try {
-    const payload = { education: educationalList.map(({ id, ...rest }) => rest) };
+    const payload = { education: educationalList };
     const resumeId = params?.resumeId;
 
     console.log("Saving to backend:", payload, "ResumeId:", resumeId);

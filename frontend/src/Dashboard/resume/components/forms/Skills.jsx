@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Rating, RoundedStar } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button'
 import { LoaderCircle } from 'lucide-react'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import { useParams } from 'react-router-dom'
-import { toast } from 'sonner'
+// import { toast } from 'sonner'
 
 function Skills() {
   const [skillsList, setSkillsList] = useState([{ name: '', rating: 0 }])
@@ -51,9 +51,7 @@ function Skills() {
   const onSave = async () => {
   setLoading(true)
   try {
-    const data = {
-      skills: skillsList.map(({ id, ...rest }) => rest),
-    }
+    const data = { skills: skillsList }
 
     const res = await fetch(`/resumes/${resumeId}`, {
       method: 'POST', // Or 'PUT'/'PATCH' if your backend expects
