@@ -34,11 +34,11 @@ function ResumeCardItem({resume, onDeleted}) {
   return (
     <div className='relative'>
       <Link to={`/dashboard/resume/` + resume.resumeId + `/edit`}>
-        <div className='p-14 bg-secondary flex items-center justify-center h-[280px] border border-primary rounded-lg hover:scale-105 transition-all hover:shadow-md shadow-primary'>
-          <Notebook/>
+        <div className='h-[280px] rounded-2xl border bg-white p-10 flex items-center justify-center shadow-sm ring-1 ring-gray-100 hover:shadow-lg hover:scale-[1.02] transition-all'>
+          <Notebook className='w-10 h-10 text-gray-600'/>
         </div>
-        <div className='flex items-center justify-between mt-1'>
-          <h2 className='text-center my-1'>{resume.title}</h2>
+        <div className='flex items-center justify-between mt-2'>
+          <h2 className='font-semibold text-gray-800 truncate'>{resume.title}</h2>
           <button
             aria-label='Actions'
             className='p-1 rounded hover:bg-gray-100'
@@ -54,7 +54,7 @@ function ResumeCardItem({resume, onDeleted}) {
       </Link>
 
       {menuOpen && (
-        <div className='absolute right-0 mt-1 w-40 bg-white border rounded-md shadow-lg z-10'>
+        <div className='absolute right-0 mt-1 w-40 bg-white border rounded-xl shadow-lg z-10'>
           <button
             className='w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-2'
             onClick={(e)=>{e.preventDefault(); e.stopPropagation(); navigate(`/dashboard/resume/${resume.resumeId}/edit`); setMenuOpen(false)}}
